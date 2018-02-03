@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Collidable
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - UI
   - 
   - 
-  - Backgrounds
-  - Foregrounds
+  - Foreground
+  - Background
   - 
   - 
   - 
@@ -38,6 +39,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Backgrounds
+    uniqueID: 4165932049
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foregrounds
+    uniqueID: 4218761509
     locked: 0
