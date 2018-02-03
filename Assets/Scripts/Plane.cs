@@ -15,8 +15,6 @@ public class Plane : MonoBehaviour {
     void Awake () {
         planeRigidbody = GetComponent<Rigidbody2D>();
         planeCollider = GetComponent<Collider2D>();
-
-        planeRigidbody.velocity = initialVelocity;
 	}
 	
 	// Update is called once per frame
@@ -39,41 +37,10 @@ public class Plane : MonoBehaviour {
 
     private void SimpleControls()
     {
-        Vector2 currentVelocity = planeRigidbody.velocity;
-
-        //planeRigidbody.angularVelocity = (Input.GetAxis("Horizontal") * 20);
-        // Apply torque
-        float input = Input.GetAxis("Horizontal");
-        if (input == 0)
-        {
-            planeRigidbody.angularVelocity = 0;
-        }
-        else
-        {
-            planeRigidbody.AddTorque(input);
-        }
-
-        float angle = planeRigidbody.rotation;
-        planeRigidbody.velocity = new Vector2(basicSpeed * Mathf.Cos(angle),
-            basicSpeed * Mathf.Sin(angle));
-
-        if (planeRigidbody.velocity != Vector2.zero)
-        {
-            //float angle = Mathf.Atan2(currentVelocity.y, currentVelocity.x) * Mathf.Rad2Deg;
-            planeRigidbody.rotation = Mathf.Atan2(planeRigidbody.velocity.y, planeRigidbody.velocity.x);
-            //transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }
-        //if (currentVelocity != Vector2.zero)
-        //{
-        //    float angle = Mathf.Atan2(currentVelocity.y, currentVelocity.x) * Mathf.Rad2Deg;
-        //    print(angle);
-        //    planeRigidbody.velocity = new Vector2(basicSpeed * planeRigidbody.rotation * Mathf.Cos(angle),
-        //                                          basicSpeed * planeRigidbody.rotation * Mathf.Sin(angle));
-        //    print(planeRigidbody.velocity);
-        //    planeRigidbody.velocity += new Vector2(0, -9.81f * Time.deltaTime * Mathf.Sin(angle));
-        //    //transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        //    print(transform.rotation);
-        //}
+        transform.Rotate(0, 0, -Input.GetAxis("Horizontal") * basicSpeed);
+        Vector3 locVel = transform.InverseTransformDirection(planeRigidbody.velocity).normalized;
+        locVel.x = basicSpeed;
+        planeRigidbody.velocity = transform.TransformDirection(locVel);
     }
 
     private void AerodynamicControls()
